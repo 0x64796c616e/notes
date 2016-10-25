@@ -1,0 +1,39 @@
+= Modifing a Program's Execution =
+
+This is a dump of my notes on modifying (hacking) a program's behavior.
+
+Different ways to do this:
+
+* Recreate the program by listening and repeating API or RESTful service calls
+
+* DLL injection w/ LD_PRELOAD
+
+* Modifying the binary
+
+* Reading and writing to process memory 
+
+DLL injection via LD_PRELOAD
+
+LD_PRELOAD: A list of additional, user-specified, ELF shared objects to be loaded before all others. The items of the list can be separated by spaces or colons. This can be used to selectively override functions in other shared objects. It will not effect statically linked functions.
+
+file name: dummy_loop.c
+<code>
+#include <stdio.h>
+#include <unistd.h>
+
+int main(int argc, char const *argv[]){
+
+	while(1){
+		printf("Random number: %i\n", rand()%100);
+		sleep(2);
+	}
+
+	return 0;
+}
+</code>
+
+nosorandom.c
+
+https://rafalcieslak.wordpress.com/2013/04/02/dynamic-linker-tricks-using-ld_preload-to-cheat-inject-features-and-investigate-programs/
+
+
